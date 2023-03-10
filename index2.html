@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>replit</title>
-        <!-- <link href="style.css" rel="stylesheet" type="text/css" /> -->
-    </head>
-    <body>
-        <div id="root"></div>
-    </body>
-    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel">
-        function App() {
-            const [counter, setCounter] = React.useState(0);
-            const onClick = () => {
-                //setCounter(counter + 1);
-                setCounter((current) => current + 1);
-            };
-            return (
-                <div>
-                    <h3>Total clicks: {counter}</h3>
-                    <button onClick={onClick}>Click me</button>
-                </div>
-            );
-        }
-        const root = document.getElementById("root");
-        ReactDOM.render(<App />, root);
-    </script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>replit</title>
+    <!-- <link href="style.css" rel="stylesheet" type="text/css" /> -->
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function App() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => setAmount(0);
+      const onInverted = () => {
+        reset();
+        setInverted((current) => !current);
+      };
+      return (
+        <div>
+          <h1>Super Converter</h1>
+          <div>
+            <label htmlFor="Minutes">Minutes</label>
+            <input value={inverted ? amount * 60 : amount} id="Minutes" placeholder="Minutes" type="number" onChange={onChange} disabled={inverted === true} />
+          </div>
+
+          <div>
+            <label htmlFor="Hours">Hours</label>
+            <input value={inverted ? amount : Math.round(amount / 60)} id="Hours" placeholder="Hours" type="number" onChange={onChange} disabled={!inverted} />
+          </div>
+          <div>
+            <button onClick={reset}>reset</button>
+            <button onClick={onInverted}>{inverted ? "Turn back" : "Invert"}</button>
+          </div>
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
 </html>
-<!-- state가 바뀌면, 리렌더링이 일어난다. -->
-<!-- state가 바뀌면, React가 컴포넌트를 refresh해준다! -->
+<!-- state가 바뀌면, 리렌더링이 일어난다. = state가 바뀌면, React가 컴포넌트를 refresh해준다 -->
+<!-- for 는 htmlFor 로 써야함. JSX 문법. -->
