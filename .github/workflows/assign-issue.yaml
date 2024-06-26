@@ -14,7 +14,7 @@ jobs:
         # actions/github-script アクションを使用
         uses: actions/github-script@v7 
         # Issue にアサインされているユーザーがいない場合のみ実行
-        if: ${{ toJSON(github.event.issue.assignees) == '[]' }}
+        if: ${{ github.event.issue.assignees == '[]' }}
         with:
           # Issue にアサインするための GitHub API 呼び出し
           # リポジトリのオーナー（GitHub APIリクエストを実行するために必要な必須パラメータ）
