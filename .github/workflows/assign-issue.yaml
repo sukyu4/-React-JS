@@ -1,16 +1,26 @@
-name: Auto Assign Issue Creator
+name: Issues
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  auto_assign:
-    if: ${{ ! contains(fromJson('["renovate[bot]", "dependabot[bot]"]'), github.actor) }}
+  assignAuthor:
+    name: Assign author to issue
+    if: ${{ !contains(fromJson('["renovate[bot]", "dependabot[bot]"]'), github.actor) }}
+    runs-on: ubuntu-latest
     permissions:
       issues: write
-    runs-on: ubuntu-latest
     steps:
-        - name: Assign Author
-          uses: technote-space/assign-author@v1.6.2
-    
+      - name: Assign author to issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const assignees = [context.actor];
+            await github.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              assignees: assignees
+            });
