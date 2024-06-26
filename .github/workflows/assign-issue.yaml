@@ -18,7 +18,7 @@ jobs:
           script: |
             const issueNumber = context.issue.number;
             const assignees = [context.actor];
-            await github.issues.addAssignees({
+            await github.rest.issues.addAssignees({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issueNumber,
