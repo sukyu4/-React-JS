@@ -2,16 +2,16 @@ name: Auto Assign Issue Creator
 
 on:
   issues:
-    types: [opened]
+    types: [opened] # 新しいIssueが作成されたときにトリガー
 
 jobs:
   auto_assign:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      issues: write # Issueに対して書き込み権限を持つ
     steps:
-      - name: Assign author to issue
-        uses: actions/github-script@v7
+      - name: Assign author to issue # ステップの名前
+        uses: actions/github-script@v7 # actions/github-scriptアクションを使用
         with:
           script: |
             github.rest.issues.addAssignees({
@@ -20,3 +20,8 @@ jobs:
               issue_number: context.issue.number,
               assignees: [context.actor]
             });
+          # IssueにアサインするためのGitHub API呼び出し
+          # リポジトリのオーナー
+          # リポジトリの名前
+          # Issueの番号
+          # Issueの作成者をアサイン
