@@ -21,8 +21,9 @@ jobs:
           # Issue の番号（同上）
           # Issue の作成者をアサイン
           script: |
-            if (github.event.issues.assignees.length === 0) {
-              github.rest.issues.addAssignees({
+            const assignees = github.event.issue.assignees;
+            if (!assignees || assignees.length === 0) {
+                github.rest.issues.addAssignees({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
