@@ -9,12 +9,18 @@ permissions:
 
 jobs:
   auto_assign:
+    # Assignees を設定していない時だけ動かす
     if: ${{ github.event.issue && !github.event.issue.assignee }}
-    runs-on: ubuntu-latest # 最新のUbuntu環境で実行
+    runs-on: ubuntu-latest # 最新の Ubuntu 環境で実行
     steps:
       - name: Assign author to issue # ステップの名前
-        uses: actions/github-script@v7 # actions/github-scriptアクションを使用
+        uses: actions/github-script@v7 # actions/github-script アクションを使用
         with:
+          # GitHub API を使用して Issue の作成者を Assignees に追加
+            # リポジトリのオーナー（GitHub API リクエストの必須パラメータ）
+            # リポジトリの名前（同上）
+            # Issue の番号（同上）
+            # Issue の作成者を Assignees に追加
           script: |
             github.rest.issues.addAssignees({
               owner: context.repo.owner,
